@@ -1,36 +1,41 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # topological sort for dependencies
+
         preMap = {}
-        visited = set()
 
         for i in range(numCourses):
             preMap[i] = []
-
+        
         for crs, preReq in prerequisites:
             preMap[crs].append(preReq)
 
-        # now we have initialized preMap
-
+        visited = set()
+        done = set() 
         def dfs(crs):
-            if crs in visited:
-                return False # proves it is a cycle
-            if len(preMap[crs]) == 0:
+            if crs in done:
                 return True
+            if crs in visited:
+                return False
+            if preMap[crs] == []:
+                done.add(crs)
+                return True
+            # 1 -> 3 2
+            # 4 -> 2
 
+            
             visited.add(crs)
-            # now we go through each prereq
             for preReq in preMap[crs]:
                 if not dfs(preReq):
                     return False
-            # why this
             visited.remove(crs)
-
-            preMap[crs] = []
+            
+            done.add(crs)
             return True
+                
 
-        # now go through all courses, and run dfs on each to see whatever it maps to is correct and does not return false
-        for crs in range(numCourses):
+        for crs, preReq in prerequisites:
             if not dfs(crs):
                 return False
-            
+        
         return True
