@@ -1,34 +1,37 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        finalResult = []
-        seen = set()
         
-
-        def backtrack(i, current):
-            print("index: ",i)
-            print("current: ", current)
-            if i >= len(nums):
-                finalResult.append(current.copy())
-                return
-            
-            current.append(nums[i])
-            print('calling b1')
-            backtrack(i+1, current)
-            
-            current.pop()
-            print('calling b2')
-            backtrack(i+1, current)
             # 1 2 3
             # 2
             # 1 2
             # 2
             # 1 3
-            # 
+        result = []
+            
+        def backtracking(index, path):
+            if index == len(nums):
+                print(path)
+                result.append(path[:])
+                return
+            
+            # choice 
+            # do we take number or not
+            path.append(nums[index])
+            print(path)
+            backtracking(index + 1, path)
+            path.pop()
 
+            backtracking(index + 1, path)
 
-
-        backtrack(0, [])
+        backtracking(0, [])
 
         # 1 2 3
-        # 1 
-        return finalResult
+        # backtrack
+        # 1 2
+        # backtrack
+        # 1 3
+        # backtrack
+        # 1
+        # 2 3
+        # 2
+        return result
