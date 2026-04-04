@@ -4,22 +4,26 @@ class Solution:
         # 1 2 3
         # 1 3 2
         # 2 1 3
-        res = []
-        if len(nums) == 1:
-            return [nums.copy()]   # return a list of permutations
-
-        for i in range(len(nums)):
-            removed = nums.pop(0)
+        result = []
+        n = len(nums)
+        
+        def backtrack(index, path):
+            if index == n:
+                print(path)
+                result.append(path[:])
+                return 
             
-            perms = self.permute(nums)
+            for num in nums[:]:
+                path.append(num)
+                removedNum = num
+                nums.remove(num) 
+                backtrack(index+1, path)
+                nums.append(removedNum)
+                path.pop()
+            
+        backtrack(0, [])
 
-            for perm in perms:
-                perm.append(removed)
-                res.append(perm)
-
-            nums.append(removed)
-
-        return res
+        return result
 
             
 
