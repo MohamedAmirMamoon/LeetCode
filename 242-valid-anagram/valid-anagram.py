@@ -5,7 +5,7 @@ class Solution:
         # if not False
 
         # same amount for each specific char
-
+# done
         # iterate through one add to hashMap with value
         # as we iterate through second remove each char from map 
         # by end if map empty return True
